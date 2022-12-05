@@ -17,10 +17,18 @@ module.exports = grammar({
 
     rules: {
 
-        source_file: $ => repeat($.namespace),
+        source_file: $ => repeat($.decl),
+        decl: $ => choice($.namespace, $.default_namespace),
         namespace: $ => seq(
             'namespace',
             $.identifier,
+            '=',
+            $.literal
+        ),
+        default_namespace: $ => seq(
+            'default',
+            'namespace',
+            optional($.identifier),
             '=',
             $.literal
         ),

@@ -7,7 +7,122 @@ namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
 --------------------------------------------------------------------------------
 
 (source_file
-  (namespace
-    (identifier)
-    (literal
-      (string_content))))
+  (decl
+    (namespace
+      (identifier)
+      (literal
+        (string_content)))))
+
+================================================================================
+Multiple namespace
+================================================================================
+
+namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
+namespace ctrl = "http://nwalsh.com/xmlns/schema-control/"
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (namespace
+      (identifier)
+      (literal
+        (string_content))))
+  (decl
+    (namespace
+      (identifier)
+      (literal
+        (string_content)))))
+
+================================================================================
+Default namespace
+================================================================================
+
+default namespace db = "http://docbook.org/ns/docbook"
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (default_namespace
+      (identifier)
+      (literal
+        (string_content)))))
+
+================================================================================
+Default namespace no identifier
+================================================================================
+
+default namespace = "http://docbook.org/ns/docbook"
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (default_namespace
+      (literal
+        (string_content)))))
+
+================================================================================
+Multiple namespace with default
+================================================================================
+
+namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
+namespace ctrl = "http://nwalsh.com/xmlns/schema-control/"
+default namespace db = "http://docbook.org/ns/docbook"
+namespace html = "http://www.w3.org/1999/xhtml"
+namespace mml = "http://www.w3.org/1998/Math/MathML"
+namespace rng = "http://relaxng.org/ns/structure/1.0"
+namespace s = "http://purl.oclc.org/dsdl/schematron"
+namespace svg = "http://www.w3.org/2000/svg"
+namespace xlink = "http://www.w3.org/1999/xlink"
+
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (namespace
+      (identifier)
+      (literal
+        (string_content))))
+  (decl
+    (namespace
+      (identifier)
+      (literal
+        (string_content))))
+  (decl
+    (default_namespace
+      (identifier)
+      (literal
+        (string_content))))
+  (decl
+    (namespace
+      (identifier)
+      (literal
+        (string_content))))
+  (decl
+    (namespace
+      (identifier)
+      (literal
+        (string_content))))
+  (decl
+    (namespace
+      (identifier)
+      (literal
+        (string_content))))
+  (decl
+    (namespace
+      (identifier)
+      (literal
+        (string_content))))
+  (decl
+    (namespace
+      (identifier)
+      (literal
+        (string_content))))
+  (decl
+    (namespace
+      (identifier)
+      (literal
+        (string_content)))))
