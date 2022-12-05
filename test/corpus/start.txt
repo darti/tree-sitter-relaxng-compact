@@ -1,0 +1,82 @@
+================================================================================
+start
+================================================================================
+
+start = db.set
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (grammar_content
+    (start
+      (pattern
+        (identifier)))))
+
+================================================================================
+start
+================================================================================
+
+start =
+  (db.set
+   | db.book
+   | db.divisions
+   | db.components
+   | db.navigation.components
+   | db.section
+   | db.para)
+  | (db.abstract
+     | db.mediaobject.content
+     | db.audiodata
+     | db.imagedata
+     | db.textdata
+     | db.videodata
+     | db.caption
+     | db.publishing.blocks
+     | db.formal.blocks
+     | db.informal.blocks
+     | db.formalpara
+     | db.inlinemediaobject
+     | db.list.blocks
+     | db.legalnotice
+     | db.verbatim.blocks
+     | db.graphic.blocks
+     | db.personblurb
+     | db.revhistory
+     | db.simpara
+     | db.step
+     | db.stepalternatives)
+  | (db.partintro | db.simplesect)
+  | db.annotation
+  | (db.sect1 | db.sect2 | db.sect3 | db.sect4 | db.sect5)
+  | (db.refentry | db.refsection | db.refsynopsisdiv)
+  | (db.refsect1 | db.refsect2 | db.refsect3)
+  | (db.glossary | db.glossdiv | db.glosslist)
+  | (db.bibliodiv | db.bibliolist)
+  | (db.setindex | db.index | db.indexdiv)
+  | (db.toc | db.tocdiv)
+  | (db.task | db.taskprerequisites | db.taskrelated | db.tasksummary)
+  | (db.calloutlist
+     | db.programlistingco
+     | db.screenco
+     | db.imageobjectco)
+  | (db.productionset | db.constraintdef)
+  | (db.msg
+     | db.msgexplan
+     | db.msgmain
+     | db.msgrel
+     | db.msgset
+     | db.msgsub)
+  | (db.qandadiv | db.qandaentry | db.qandaset)
+  | (db.equation | db.informalequation)
+  | db.cmdsynopsis
+  | (db.synopsis.blocks | db.funcsynopsisinfo | db.classsynopsisinfo)
+  | db.admonition.blocks
+  | db.topic
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (grammar_content
+    (start
+      (pattern
+        (identifier)))))

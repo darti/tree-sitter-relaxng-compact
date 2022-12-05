@@ -2,23 +2,20 @@ module.exports = grammar({
     name: 'relaxng_compact',
 
     extras: $ => [
-        /\s/
-    ],
-
-    supertypes: $ => [
-
-    ],
-    inline: $ => [
-        $._grammar_exts,
-        $._sign
+        /\s/,
+        $.line_comment,
     ],
 
     word: $ => $.identifier,
 
     rules: {
 
-        source_file: $ => repeat($.decl),
+        source_file: $ => seq(
+            repeat($.decl),
+            choice($.pattern, optional($.grammar_content))),
+
         decl: $ => choice($.namespace, $.default_namespace),
+
         namespace: $ => seq(
             'namespace',
             $.identifier,
@@ -32,7 +29,62 @@ module.exports = grammar({
             '=',
             $.literal
         ),
-        identifier: $ => /[_\p{XID_Start}][_\p{XID_Continue}]*/,
+
+        pattern: $ => choice(
+            // "element" nameClass "{" pattern "}"
+            // "attribute" nameClass "{" pattern "}"
+            prec.left(1, seq($.pattern, repeat1(seq(',', $.pattern)))),
+            prec.left(1, seq($.pattern, repeat1(seq('&', $.pattern)))),
+            prec.left(1, seq($.pattern, repeat1(seq('|', $.pattern)))),
+
+            prec(2, seq($.pattern, '?')),
+            prec(2, seq($.pattern, '*')),
+            prec(2, seq($.pattern, '+')),
+
+            seq('list', '{', $.pattern, '}'),
+            seq('mixed', '{', $.pattern, '}'),
+
+            $.identifier,
+            seq('parent', $.identifier),
+            'empty',
+            'text',
+            // [datatypeName] datatypeValue
+            // datatypeName["{" param * "}"][exceptPattern],
+            'notAllowed',
+            // "external" anyURILiteral[inherit]
+            seq('grammar', '{', repeat($.grammar_content), '}'),
+            seq('(', $.pattern, ')')
+
+        ),
+
+
+
+        grammar_content: $ => choice(
+            $.start,
+            $.define,
+            seq('div', '{', repeat($.grammar_content), '}'),
+            // include
+        ),
+
+        start: $ => seq(
+            "start",
+            $._assignMethod,
+            $.pattern
+        ),
+
+        define: $ => seq(
+            $.identifier,
+            $._assignMethod,
+            $.pattern
+        ),
+
+
+        // utils
+
+        _assignMethod: $ => choice('=', '|=', '&='),
+
+        identifier: $ => /[_\p{XID_Start}][\._\p{XID_Continue}]*/,
+
         namespaceURILiteral: $ => choice(
             'inherit',
 
@@ -78,9 +130,11 @@ module.exports = grammar({
             'string',
             'text',
             'token',
-        )
+        ),
 
-
+        line_comment: $ => token(seq(
+            '#', /.*/
+        )),
 
     }
 });
