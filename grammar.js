@@ -12,7 +12,7 @@ module.exports = grammar({
 
         source_file: $ => seq(
             repeat($.decl),
-            choice($.pattern, optional($.grammar_content))),
+            choice($._pattern, optional($.grammar_content))),
 
         decl: $ => choice($.namespace, $.default_namespace),
 
@@ -30,19 +30,19 @@ module.exports = grammar({
             $.literal
         ),
 
-        pattern: $ => choice(
-            // "element" nameClass "{" pattern "}"
+        _pattern: $ => choice(
+            seq('elemen', $.name_class, '{', $._pattern, '}'),
             // "attribute" nameClass "{" pattern "}"
-            prec.left(1, seq($.pattern, repeat1(seq(',', $.pattern)))),
-            prec.left(1, seq($.pattern, repeat1(seq('&', $.pattern)))),
-            prec.left(1, seq($.pattern, repeat1(seq('|', $.pattern)))),
+            alias(prec.left(1, seq($._pattern, ',', $._pattern)), $.concat),
+            prec.left(1, seq($._pattern, '&', $._pattern)),
+            alias(prec.left(1, seq($._pattern, '|', $._pattern)), $.union),
 
-            prec(2, seq($.pattern, '?')),
-            prec(2, seq($.pattern, '*')),
-            prec(2, seq($.pattern, '+')),
+            prec(2, seq($._pattern, '?')),
+            prec(2, seq($._pattern, '*')),
+            prec(2, seq($._pattern, '+')),
 
-            seq('list', '{', $.pattern, '}'),
-            seq('mixed', '{', $.pattern, '}'),
+            seq('list', '{', $._pattern, '}'),
+            seq('mixed', '{', $._pattern, '}'),
 
             $.identifier,
             seq('parent', $.identifier),
@@ -53,7 +53,7 @@ module.exports = grammar({
             'notAllowed',
             // "external" anyURILiteral[inherit]
             seq('grammar', '{', repeat($.grammar_content), '}'),
-            seq('(', $.pattern, ')')
+            seq('(', $._pattern, ')')
 
         ),
 
@@ -69,13 +69,13 @@ module.exports = grammar({
         start: $ => seq(
             "start",
             $._assignMethod,
-            $.pattern
+            $._pattern
         ),
 
         define: $ => seq(
             $.identifier,
             $._assignMethod,
-            $.pattern
+            $._pattern
         ),
 
 
@@ -109,6 +109,11 @@ module.exports = grammar({
                     /x[0-9a-fA-F]{2}/
                 )
             )),
+
+        name_class: $ => choice(
+            $.identifier,
+
+        ),
 
         keyword: $ => choice(
             'attribute',
