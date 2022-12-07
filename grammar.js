@@ -12,7 +12,7 @@ module.exports = grammar({
 
         source_file: $ => seq(
             repeat($.decl),
-            choice($._pattern, optional($.grammar_content))),
+            choice($.pattern, optional($.grammar_content))),
 
         decl: $ => choice($.namespace, $.default_namespace),
 
@@ -30,19 +30,19 @@ module.exports = grammar({
             $.literal
         ),
 
-        _pattern: $ => choice(
-            seq('elemen', $.name_class, '{', $._pattern, '}'),
-            // "attribute" nameClass "{" pattern "}"
-            alias(prec.left(1, seq($._pattern, ',', $._pattern)), $.concat),
-            prec.left(1, seq($._pattern, '&', $._pattern)),
-            alias(prec.left(1, seq($._pattern, '|', $._pattern)), $.union),
+        pattern: $ => choice(
+            seq('element', $.name_class, '{', $.pattern, '}'),
+            seq('attribute', $.name_class, '{', $.pattern, '}'),
+            alias(prec.left(1, seq($.pattern, ',', $.pattern)), $.concat),
+            prec.left(1, seq($.pattern, '&', $.pattern)),
+            alias(prec.left(1, seq($.pattern, '|', $.pattern)), $.union),
 
-            prec(2, seq($._pattern, '?')),
-            prec(2, seq($._pattern, '*')),
-            prec(2, seq($._pattern, '+')),
+            prec(2, seq($.pattern, '?')),
+            prec(2, seq($.pattern, '*')),
+            prec(2, seq($.pattern, '+')),
 
-            seq('list', '{', $._pattern, '}'),
-            seq('mixed', '{', $._pattern, '}'),
+            seq('list', '{', $.pattern, '}'),
+            seq('mixed', '{', $.pattern, '}'),
 
             $.identifier,
             seq('parent', $.identifier),
@@ -53,7 +53,7 @@ module.exports = grammar({
             'notAllowed',
             // "external" anyURILiteral[inherit]
             seq('grammar', '{', repeat($.grammar_content), '}'),
-            seq('(', $._pattern, ')')
+            seq('(', $.pattern, ')')
 
         ),
 
@@ -69,13 +69,13 @@ module.exports = grammar({
         start: $ => seq(
             "start",
             $._assignMethod,
-            $._pattern
+            $.pattern
         ),
 
         define: $ => seq(
             $.identifier,
             $._assignMethod,
-            $._pattern
+            $.pattern
         ),
 
 
@@ -111,9 +111,15 @@ module.exports = grammar({
             )),
 
         name_class: $ => choice(
-            $.identifier,
+            alias(seq($.identifier, ':', $.identifier), $.name),
+            alias(seq($.identifier, ':*', optional($.except_name_class)), $.nsname),
+            alias(seq('*', optional($.except_name_class)), $.anyname),
+            prec.left(1, seq($.name_class, '|', $.name_class)),
+            seq('(', $.name_class, ')')
 
         ),
+
+        except_name_class: $ => seq('-', $.name_class),
 
         keyword: $ => choice(
             'attribute',

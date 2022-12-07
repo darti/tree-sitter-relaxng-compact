@@ -1,5 +1,55 @@
 [
   {
+    "type": "anyname",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "name_class",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "concat",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "concat",
+          "named": true
+        },
+        {
+          "type": "grammar_content",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "name_class",
+          "named": true
+        },
+        {
+          "type": "pattern",
+          "named": true
+        },
+        {
+          "type": "union",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "decl",
     "named": true,
     "fields": {},
@@ -95,6 +145,33 @@
     }
   },
   {
+    "type": "name_class",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "anyname",
+          "named": true
+        },
+        {
+          "type": "name",
+          "named": true
+        },
+        {
+          "type": "name_class",
+          "named": true
+        },
+        {
+          "type": "nsname",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "namespace",
     "named": true,
     "fields": {},
@@ -114,6 +191,21 @@
     }
   },
   {
+    "type": "nsname",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "name_class",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "pattern",
     "named": true,
     "fields": {},
@@ -121,6 +213,10 @@
       "multiple": true,
       "required": false,
       "types": [
+        {
+          "type": "concat",
+          "named": true
+        },
         {
           "type": "grammar_content",
           "named": true
@@ -130,7 +226,15 @@
           "named": true
         },
         {
+          "type": "name_class",
+          "named": true
+        },
+        {
           "type": "pattern",
+          "named": true
+        },
+        {
+          "type": "union",
           "named": true
         }
       ]
@@ -190,6 +294,41 @@
     }
   },
   {
+    "type": "union",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "concat",
+          "named": true
+        },
+        {
+          "type": "grammar_content",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "name_class",
+          "named": true
+        },
+        {
+          "type": "pattern",
+          "named": true
+        },
+        {
+          "type": "union",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "\"",
     "named": false
   },
@@ -218,7 +357,7 @@
     "named": false
   },
   {
-    "type": ",",
+    "type": "-",
     "named": false
   },
   {
@@ -288,6 +427,10 @@
   {
     "type": "mixed",
     "named": false
+  },
+  {
+    "type": "name",
+    "named": true
   },
   {
     "type": "namespace",
