@@ -15,6 +15,11 @@
     }
   },
   {
+    "type": "assignMethod",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "concat",
     "named": true,
     "fields": {},
@@ -24,6 +29,49 @@
       "types": [
         {
           "type": "concat",
+          "named": true
+        },
+        {
+          "type": "conjonction",
+          "named": true
+        },
+        {
+          "type": "grammar_content",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "name_class",
+          "named": true
+        },
+        {
+          "type": "pattern",
+          "named": true
+        },
+        {
+          "type": "union",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "conjonction",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "concat",
+          "named": true
+        },
+        {
+          "type": "conjonction",
           "named": true
         },
         {
@@ -96,6 +144,10 @@
       "required": true,
       "types": [
         {
+          "type": "assignMethod",
+          "named": true
+        },
+        {
           "type": "identifier",
           "named": true
         },
@@ -147,7 +199,18 @@
   {
     "type": "name_class",
     "named": true,
-    "fields": {},
+    "fields": {
+      "except": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "nsname",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": true,
@@ -218,6 +281,10 @@
           "named": true
         },
         {
+          "type": "conjonction",
+          "named": true
+        },
+        {
           "type": "grammar_content",
           "named": true
         },
@@ -268,9 +335,13 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "assignMethod",
+          "named": true
+        },
         {
           "type": "pattern",
           "named": true
@@ -306,6 +377,10 @@
           "named": true
         },
         {
+          "type": "conjonction",
+          "named": true
+        },
+        {
           "type": "grammar_content",
           "named": true
         },
@@ -330,10 +405,6 @@
   },
   {
     "type": "\"",
-    "named": false
-  },
-  {
-    "type": "&",
     "named": false
   },
   {

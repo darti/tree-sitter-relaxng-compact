@@ -1,0 +1,93 @@
+================================================================================
+Any attribute
+================================================================================
+
+db._any = attribute * { text }
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (grammar_content
+    (define
+      (identifier)
+      (assignMethod)
+      (pattern
+        (name_class
+          (anyname))
+        (pattern)))))
+
+================================================================================
+Complex Element
+================================================================================
+
+element * - (db:* | html:*) {
+      (db._any.attribute | text | db._any)*
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (pattern
+    (name_class
+      (anyname)
+      (anyname
+        (name_class
+          (name_class
+            (name_class
+              (nsname)
+              (nsname))
+            (name_class
+              (nsname)
+              (nsname))))))
+    (pattern
+      (pattern
+        (pattern
+          (union
+            (union
+              (identifier))
+            (union)
+            (union))
+          (union)
+          (union
+            (identifier)))))))
+
+================================================================================
+Pattern operations
+================================================================================
+
+db.methodparam.attlist =
+  db.methodparam.role.attribute?
+  & db.common.attributes
+  & db.common.linking.attributes
+  & db.methodparam.rep.attribute?
+  & db.methodparam.choice.attribute?
+
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (grammar_content
+    (define
+      (identifier)
+      (assignMethod)
+      (pattern
+        (conjonction
+          (conjonction
+            (conjonction
+              (conjonction
+                (pattern
+                  (identifier)))
+              (conjonction)
+              (conjonction
+                (identifier)))
+            (conjonction)
+            (conjonction
+              (identifier)))
+          (conjonction)
+          (conjonction
+            (pattern
+              (identifier))))
+        (conjonction)
+        (conjonction
+          (pattern
+            (identifier)))))))

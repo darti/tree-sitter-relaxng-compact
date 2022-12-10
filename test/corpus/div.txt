@@ -26,5 +26,6 @@ div {
     (grammar_content
       (define
         (identifier)
+        (assignMethod)
         (pattern
           (identifier))))))

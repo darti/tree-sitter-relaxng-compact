@@ -16,20 +16,15 @@
           "type": "CHOICE",
           "members": [
             {
-              "type": "SYMBOL",
-              "name": "pattern"
+              "type": "REPEAT",
+              "content": {
+                "type": "SYMBOL",
+                "name": "grammar_content"
+              }
             },
             {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "SYMBOL",
-                  "name": "grammar_content"
-                },
-                {
-                  "type": "BLANK"
-                }
-              ]
+              "type": "SYMBOL",
+              "name": "pattern"
             }
           ]
         }
@@ -182,25 +177,30 @@
           "value": "concat"
         },
         {
-          "type": "PREC_LEFT",
-          "value": 1,
+          "type": "ALIAS",
           "content": {
-            "type": "SEQ",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "pattern"
-              },
-              {
-                "type": "STRING",
-                "value": "&"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "pattern"
-              }
-            ]
-          }
+            "type": "PREC_LEFT",
+            "value": 1,
+            "content": {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "pattern"
+                },
+                {
+                  "type": "STRING",
+                  "value": "&"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "pattern"
+                }
+              ]
+            }
+          },
+          "named": true,
+          "value": "conjonction"
         },
         {
           "type": "ALIAS",
@@ -439,7 +439,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "_assignMethod"
+          "name": "assignMethod"
         },
         {
           "type": "SYMBOL",
@@ -456,7 +456,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "_assignMethod"
+          "name": "assignMethod"
         },
         {
           "type": "SYMBOL",
@@ -464,7 +464,7 @@
         }
       ]
     },
-    "_assignMethod": {
+    "assignMethod": {
       "type": "CHOICE",
       "members": [
         {
@@ -624,16 +624,20 @@
                 "value": ":*"
               },
               {
-                "type": "CHOICE",
-                "members": [
-                  {
-                    "type": "SYMBOL",
-                    "name": "except_name_class"
-                  },
-                  {
-                    "type": "BLANK"
-                  }
-                ]
+                "type": "FIELD",
+                "name": "except",
+                "content": {
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "SYMBOL",
+                      "name": "except_name_class"
+                    },
+                    {
+                      "type": "BLANK"
+                    }
+                  ]
+                }
               }
             ]
           },

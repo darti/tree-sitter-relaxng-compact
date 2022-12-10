@@ -12,7 +12,7 @@ module.exports = grammar({
 
         source_file: $ => seq(
             repeat($.decl),
-            choice($.pattern, optional($.grammar_content))),
+            choice(repeat($.grammar_content), $.pattern)),
 
         decl: $ => choice($.namespace, $.default_namespace),
 
@@ -34,7 +34,7 @@ module.exports = grammar({
             seq('element', $.name_class, '{', $.pattern, '}'),
             seq('attribute', $.name_class, '{', $.pattern, '}'),
             alias(prec.left(1, seq($.pattern, ',', $.pattern)), $.concat),
-            prec.left(1, seq($.pattern, '&', $.pattern)),
+            alias(prec.left(1, seq($.pattern, '&', $.pattern)), $.conjonction),
             alias(prec.left(1, seq($.pattern, '|', $.pattern)), $.union),
 
             prec(2, seq($.pattern, '?')),
@@ -68,20 +68,20 @@ module.exports = grammar({
 
         start: $ => seq(
             "start",
-            $._assignMethod,
+            $.assignMethod,
             $.pattern
         ),
 
         define: $ => seq(
             $.identifier,
-            $._assignMethod,
+            $.assignMethod,
             $.pattern
         ),
 
 
         // utils
 
-        _assignMethod: $ => choice('=', '|=', '&='),
+        assignMethod: $ => choice('=', '|=', '&='),
 
         identifier: $ => /[_\p{XID_Start}][\._\p{XID_Continue}]*/,
 
@@ -112,7 +112,7 @@ module.exports = grammar({
 
         name_class: $ => choice(
             alias(seq($.identifier, ':', $.identifier), $.name),
-            alias(seq($.identifier, ':*', optional($.except_name_class)), $.nsname),
+            alias(seq($.identifier, ':*', field('except', optional($.except_name_class))), $.nsname),
             alias(seq('*', optional($.except_name_class)), $.anyname),
             prec.left(1, seq($.name_class, '|', $.name_class)),
             seq('(', $.name_class, ')')

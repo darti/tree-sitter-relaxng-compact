@@ -9,6 +9,7 @@ start = db.set
 (source_file
   (grammar_content
     (start
+      (assignMethod)
       (pattern
         (identifier)))))
 
@@ -25,6 +26,7 @@ start =
 (source_file
   (grammar_content
     (start
+      (assignMethod)
       (pattern
         (union
           (identifier))
